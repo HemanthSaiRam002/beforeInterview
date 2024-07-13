@@ -2,9 +2,13 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const deps = require('./package.json').dependencies;
 
 module.exports = {
     entry: './src/index.tsx',
+    output: {
+        publicPath: 'auto', // Ensures dynamic module resolution
+      },
     devServer: {
         port: 3000,
         hot: true,
@@ -41,10 +45,9 @@ module.exports = {
                 "cart": "cart@http://localhost:3002/remoteEntry.js"
             },
             shared: {
-                react: { singleton: true, requiredVersion: '^18.3.1', eager: true },
-                'react-dom': {
-                    singleton: true, requiredVersion: '^18.3.1', eager: true
-                }
+                ...deps,
+                react: { singleton: true, requiredVersion: deps.react, eager: true },
+                'react-dom': { singleton: true, requiredVersion: deps['react-dom'], eager: true },
             }
         })
     ]
