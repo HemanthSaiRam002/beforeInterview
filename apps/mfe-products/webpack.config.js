@@ -6,12 +6,12 @@ const deps = require('./package.json').dependencies;
 module.exports = {
     entry: './src/index.tsx',
     devServer: {
-        port: 3001,
-        hot: true,
         static: {
             directory: path.join(__dirname, "dist")
         },
-        historyApiFallback: true
+        historyApiFallback: true,
+        port: 3001,
+        hot: true
     },
     module: {
         rules: [
