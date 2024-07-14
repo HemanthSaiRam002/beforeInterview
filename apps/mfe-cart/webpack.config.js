@@ -6,9 +6,6 @@ const deps = require('./package.json').dependencies;
 
 module.exports = {
     entry: './src/index.tsx',
-    output: {
-        publicPath: 'auto', // Ensures dynamic module resolution
-      },
     devServer: {
         port: 3002,
         hot: true,

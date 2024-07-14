@@ -5,9 +5,6 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 const deps = require('./package.json').dependencies;
 module.exports = {
     entry: './src/index.tsx',
-    output: {
-        publicPath: 'auto', // Ensures dynamic module resolution
-      },
     devServer: {
         port: 3001,
         hot: true,
