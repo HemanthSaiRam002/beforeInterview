@@ -3,6 +3,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const deps = require('./package.json').dependencies;
+const webpack = require("webpack");
+
 module.exports = {
     entry: './src/index.tsx',
     devServer: {
@@ -11,7 +13,7 @@ module.exports = {
         },
         historyApiFallback: true,
         port: 3001,
-        hot: true
+        hot: false,
     },
     module: {
         rules: [
@@ -34,11 +36,15 @@ module.exports = {
             template: './public/index.html'
         }),
         new MiniCssExtractPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new ModuleFederationPlugin({
             name: 'products',
             filename: 'remoteEntry.js',
             exposes: {
                 './Products': './src/Products'
+            },
+            remotes:{
+                "shell":"shell@http://localhost:3000/remoteEntry.js"
             },
             shared: {
                 ...deps,

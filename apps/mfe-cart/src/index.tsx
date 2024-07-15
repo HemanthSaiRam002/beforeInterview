@@ -2,13 +2,23 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 
-const root = document.getElementById('root');
-const rootContainer = createRoot(root);
+const rootElement = document.getElementById('root');
+const rootContainer = createRoot(rootElement);
 
-const rootElement = (
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+const render = (Component: React.FC) => {
+  rootContainer.render(
+    <React.StrictMode>
+      <Component />
+    </React.StrictMode>
+  );
+};
 
-rootContainer.render(rootElement);
+render(App);
+
+if (module.hot) {
+  module.hot.accept('./App', () => {
+    const NextApp = require('./App').default;
+    console.log('Accepting the updated App module!');
+    render(NextApp);
+  });
+}

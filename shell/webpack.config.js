@@ -37,9 +37,13 @@ module.exports = {
         new MiniCssExtractPlugin(),
         new ModuleFederationPlugin({
             name: "shell",
+            filename:"remoteEntry.js",
             remotes: {
                 "products": "products@http://localhost:3001/remoteEntry.js",
                 "cart": "cart@http://localhost:3002/remoteEntry.js"
+            },
+            exposes:{
+                "./events":"./src/events.ts"
             },
             shared: {
                 ...deps,
